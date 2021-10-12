@@ -2,45 +2,20 @@ package model.services;
 
 import model.entities.CarRental;
 import model.entities.Invoice;
-import model.exceptions.PersonalizedException;
 
 public class RentalService {
     private Double pricePerDay;
     private Double pricePerHour;
     
-    private BrazilTaxServices taxServices;
+    private TaxService taxService;
 
     public RentalService() {
     }
 
-    public RentalService(Double pricePerDay, Double pricePerHour, BrazilTaxServices taxServices) {
+    public RentalService(Double pricePerDay, Double pricePerHour, TaxService taxService) {
         this.pricePerDay = pricePerDay;
         this.pricePerHour = pricePerHour;
-        this.taxServices = taxServices;
-    }
-
-    public Double getPricePerDay() {
-        return pricePerDay;
-    }
-
-    public void setPricePerDay(Double pricePerDay) {
-        this.pricePerDay = pricePerDay;
-    }
-
-    public Double getPricePerHour() {
-        return pricePerHour;
-    }
-
-    public void setPricePerHour(Double pricePerHour) {
-        this.pricePerHour = pricePerHour;
-    }
-
-    public BrazilTaxServices getTaxServices() {
-        return taxServices;
-    }
-
-    public void setTaxServices(BrazilTaxServices taxServices) {
-        this.taxServices = taxServices;
+        this.taxService = taxService;
     }
     
     public void processInvoice(CarRental carRental){
@@ -54,7 +29,7 @@ public class RentalService {
         }else{
             basicPayment = Math.ceil(hours / 24) * pricePerDay;
         }
-        double tax = taxServices.tax(basicPayment);        
+        double tax = taxService.tax(basicPayment);        
         
         //1-crio um novo objeto de nota de pagamento e 2- associei ao objeto de aluguel
                 //2                       //1 
